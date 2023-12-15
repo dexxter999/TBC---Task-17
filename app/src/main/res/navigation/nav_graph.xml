@@ -23,7 +23,12 @@
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"/>
+            app:popExitAnim="@android:anim/fade_out"
+            app:popUpToInclusive="false">
+            <argument
+                android:name="rememberMeChecked"
+                app:argType="boolean" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -34,9 +39,5 @@
         android:id="@+id/homeFragment"
         android:name="com.example.task17.screens.fragments.homefragment.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
 </navigation>

@@ -3,36 +3,38 @@ package com.example.task17.screens.fragments.loginfragment
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.task17.SessionManager
+import com.example.task17.R
 import com.example.task17.base.BaseFragment
 import com.example.task17.databinding.FragmentLoginBinding
 import com.example.task17.factory.createViewModelFactory
 import com.example.task17.interfaces.Listeners
 import com.example.task17.interfaces.Observers
 import com.example.task17.network.Resource
+import com.example.task17.repository.DataStoreRepository
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate), Listeners,
     Observers {
 
+    private var isNavigationInProgress = false
+
     private val viewModel: LoginViewModel by viewModels {
         createViewModelFactory {
             LoginViewModel(
-                sessionManager = sessionManager
+                dataStoreRepository = dataStore
             )
         }
     }
-    private val sessionManager: SessionManager by lazy { SessionManager(requireContext()) }
+
+    private val dataStore: DataStoreRepository by lazy { DataStoreRepository(requireContext()) }
 
     override fun init() {
-        getInfo()
         listeners()
         observers()
     }
@@ -46,10 +48,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         buttonLogin.setOnClickListener {
             val email = etEmail.text.toString()
             val password = etPassword.text.toString()
+            val rememberMeChecked = cbRememberMe.isChecked
+
+            viewModel.setRememberMe(rememberMeChecked)
 
             if (validateInput(email, password)) {
                 viewModel.login(email, password)
             }
+            navigateToHome()
         }
     }
 
@@ -60,13 +66,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                     when (it) {
                         is Resource.Success -> {
                             showLoading(false)
-                            if (binding.cbRememberMe.isChecked) {
-                                sessionManager.saveSession(
-                                    email = binding.etEmail.text.toString(),
-                                    token = it.data.token,
-                                    rememberMe = true
-                                )
-                            }
                             navigateToHome()
                         }
 
@@ -80,20 +79,23 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.sessionExists.collectLatest { sessionExists ->
+
+                }
+            }
+        }
     }
 
     private fun navigateToHome() {
-        val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
-        findNavController().navigate(action)
-    }
-
-    private fun getInfo() = with(binding){
-        setFragmentResultListener("registrationResult") { _, result ->
-            val email = result.getString("email")
-            val password = result.getString("password")
-
-            etEmail.setText(email)
-            etPassword.setText(password)
+        if (viewModel.sessionExists.value) {
+            val action =
+                LoginFragmentDirections.actionLoginFragmentToHomeFragment(
+                    rememberMeChecked = viewModel.rememberMeChecked.value
+                )
+            findNavController().navigate(action)
         }
     }
 
@@ -125,5 +127,4 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     private fun isValidEmail(email: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-
 }
