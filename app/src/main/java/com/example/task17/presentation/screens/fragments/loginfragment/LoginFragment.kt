@@ -1,13 +1,11 @@
 package com.example.task17.presentation.screens.fragments.loginfragment
 
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.task17.R
 import com.example.task17.core.base.BaseFragment
 import com.example.task17.core.helper.Listeners
 import com.example.task17.core.helper.Observers

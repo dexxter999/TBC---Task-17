@@ -1,12 +1,10 @@
 package com.example.task17.data.repository
 
 
-import android.util.Log.d
 import com.example.task17.data.network.AuthService
 import com.example.task17.data.network.Resource
 import com.example.task17.data.network.model.request.LoginAndRegisterRequest
 import com.example.task17.domain.AuthRepository
-import com.example.task17.domain.LoginAndRegister
 import com.example.task17.domain.LoginResponse
 import com.example.task17.domain.RegisterResponse
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +28,7 @@ class AuthRepositoryImpl @Inject constructor(private val authService: AuthServic
                 } else {
                     emit(Resource.Error(loginResponse.errorBody()?.string()))
                 }
-            }catch (e: IOException) {
+            } catch (e: IOException) {
                 emit(Resource.Error("Network Error"))
             } catch (e: HttpException) {
                 emit(Resource.Error("HTTP Error: ${e.code()}"))

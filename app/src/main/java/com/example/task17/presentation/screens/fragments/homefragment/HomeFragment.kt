@@ -1,8 +1,6 @@
 package com.example.task17.presentation.screens.fragments.homefragment
 
 import androidx.activity.addCallback
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle

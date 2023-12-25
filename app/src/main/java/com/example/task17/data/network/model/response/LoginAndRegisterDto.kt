@@ -9,5 +9,4 @@ data class LoginAndRegisterDto(
     fun toLoginAndRegister() = LoginAndRegister(email, password)
 
 
-
-    }
+}

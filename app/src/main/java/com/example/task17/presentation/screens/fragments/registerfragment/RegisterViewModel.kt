@@ -5,23 +5,21 @@ import androidx.lifecycle.viewModelScope
 import com.example.task17.data.network.Resource
 import com.example.task17.data.network.model.request.LoginAndRegisterRequest
 import com.example.task17.domain.AuthRepository
-import com.example.task17.domain.LoginAndRegister
 import com.example.task17.domain.RegisterResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 @HiltViewModel
 class RegisterViewModel @Inject constructor(private val repository: AuthRepository) :
     ViewModel() {
     private val _registerState = MutableStateFlow(RegisterViewState())
-    val registerState get() =  _registerState.asSharedFlow()
+    val registerState get() = _registerState.asSharedFlow()
 
     private val _intentChannel = Channel<RegisterEvent>(Channel.UNLIMITED)
 
@@ -48,7 +46,7 @@ class RegisterViewModel @Inject constructor(private val repository: AuthReposito
 }
 
 
-data class RegisterViewState (
+data class RegisterViewState(
     val register: Resource<RegisterResponse> = Resource.Loading,
     val error: Exception? = null,
     val isError: Boolean = false,
@@ -56,5 +54,6 @@ data class RegisterViewState (
 )
 
 sealed interface RegisterEvent {
-    data class Register(val email: String, val password: String, val repeatPassword: String): RegisterEvent
+    data class Register(val email: String, val password: String, val repeatPassword: String) :
+        RegisterEvent
 }

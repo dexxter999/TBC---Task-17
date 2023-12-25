@@ -29,7 +29,6 @@ class DataStoreRepository @Inject constructor(private val dataStore: DataStore<P
     }
 
 
-
     suspend fun getSavedEmail(): String {
         return getEmail.first()
     }

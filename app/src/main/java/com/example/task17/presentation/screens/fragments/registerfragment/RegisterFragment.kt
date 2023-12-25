@@ -14,12 +14,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.task17.core.base.BaseFragment
 import com.example.task17.core.helper.Listeners
 import com.example.task17.core.helper.Observers
-import com.example.task17.data.network.Resource
 import com.example.task17.databinding.FragmentRegisterBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
@@ -62,7 +59,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                 viewModel.registerState.collect { viewState ->
                     binding.progressBar.isVisible = viewState.isLoading
                     if (viewState.isError) {
-                        Snackbar.make(binding.root, viewState.error?.message.toString(), Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(
+                            binding.root,
+                            viewState.error?.message.toString(),
+                            Snackbar.LENGTH_LONG
+                        ).show()
                     }
                 }
             }

@@ -9,7 +9,7 @@
         android:id="@+id/loginFragment"
         android:name="com.example.task17.presentation.screens.fragments.loginfragment.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment"
@@ -24,8 +24,7 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out"
-            app:popUpToInclusive="false">
-        </action>
+            app:popUpToInclusive="false"></action>
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
