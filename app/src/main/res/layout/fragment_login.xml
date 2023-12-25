@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".screens.fragments.loginfragment.LoginFragment">
+    tools:context=".presentation.screens.fragments.loginfragment.LoginFragment">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvRegister"

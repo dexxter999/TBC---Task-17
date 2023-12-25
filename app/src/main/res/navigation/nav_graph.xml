@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.task17.screens.fragments.loginfragment.LoginFragment"
+        android:name="com.example.task17.presentation.screens.fragments.loginfragment.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -25,19 +25,16 @@
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out"
             app:popUpToInclusive="false">
-            <argument
-                android:name="rememberMeChecked"
-                app:argType="boolean" />
         </action>
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.task17.screens.fragments.registerfragment.RegisterFragment"
+        android:name="com.example.task17.presentation.screens.fragments.registerfragment.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.task17.screens.fragments.homefragment.HomeFragment"
+        android:name="com.example.task17.presentation.screens.fragments.homefragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
 </navigation>
